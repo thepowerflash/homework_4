@@ -1,25 +1,76 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+function FormforRegistration() {
+  const initialFormData = {
+    fullName: '',
+    phoneNumber: '',
+    email: '',
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [submittedData, setSubmittedData] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setSubmittedData(formData);
+    setFormData(initialFormData);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+    <div>
+      <h2>SIGN UP</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Username:</label>
+          <input
+            type="text"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleChange}
+          />
+        </div>
+        <div >
+          <label>Phone number:</label>
+          <input
+            type="tel"
+            name="phoneNumber"
+            value={formData.phoneNumber}
+            onChange={handleChange}
+          />
+        </div>
+        <div >
+          <label>Email address:</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+
+      {submittedData && (
+        <div>
+          <p>Username: {submittedData.fullName}</p>
+          <p>Phone number: {submittedData.phoneNumber}</p>
+          <p>Email address: {submittedData.email}</p>
+        </div>
+      )}
+    </div>
     </div>
   );
 }
 
-export default App;
+export default FormforRegistration;
